@@ -1,6 +1,7 @@
 import express from 'express'; // express is a function
 import { Customer, validateCustomer } from '../models/customer.js'
 import authorization from '../middleware/authorization.js';
+import admin from '../middleware/admin.js';
 
 const router = express.Router();
 
@@ -67,7 +68,7 @@ router.put('/:id', authorization, async (req, res) => {
 });
 
 // DELETE a customer
-router.delete('/:id', authorization, async (req, res) => {
+router.delete('/:id', [authorization, admin], async (req, res) => {
     // delete
     const customer = await Customer.findByIdAndRemove(req.params.id);
     // check customer exist or not

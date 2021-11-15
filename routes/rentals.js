@@ -5,6 +5,7 @@ import { Rental, validateRental } from '../models/rental.js'
 import { Customer } from '../models/customer.js'
 import { Movie } from '../models/movie.js'
 import authorization from '../middleware/authorization.js';
+import admin from '../middleware/admin.js';
 
 const router = express.Router();
 
@@ -122,7 +123,7 @@ router.put('/:id', authorization, async (req, res) => {
 });
 
 // DELETE a rental
-router.delete('/:id', authorization, async (req, res) => {
+router.delete('/:id', [authorization, admin], async (req, res) => {
     // delete
     const rental = await Rental.findByIdAndRemove(req.params.id);
     // check rental exist or not

@@ -2,6 +2,7 @@ import express from 'express'; // express is a function
 import { Movie, validateMovie } from '../models/movie.js'
 import { Genre } from '../models/genre.js'
 import authorization from '../middleware/authorization.js';
+import admin from '../middleware/admin.js';
 
 const router = express.Router();
 
@@ -89,7 +90,7 @@ router.put('/:id', authorization, async (req, res) => {
 });
 
 // DELETE a movie
-router.delete('/:id', authorization, async (req, res) => {
+router.delete('/:id', [authorization, admin], async (req, res) => {
     // delete
     const movie = await Movie.findByIdAndRemove(req.params.id);
     // check movie exist or not

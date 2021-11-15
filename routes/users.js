@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'; // bcrypt is a function
 import _ from 'lodash'; // _ is a class
 import { User, validateUser } from '../models/user.js'
 import authorization from '../middleware/authorization.js';
+import admin from '../middleware/admin.js';
 
 const router = express.Router();
 
@@ -85,7 +86,7 @@ router.put('/:id', authorization, async (req, res) => {
 });
 
 // DELETE a user
-router.delete('/:id', authorization, async (req, res) => {
+router.delete('/:id', [authorization, admin], async (req, res) => {
     // delete
     const user = await User.findByIdAndRemove(req.params.id);
     // check user exist or not
