@@ -1,6 +1,7 @@
 import express from 'express'; // express is a function
 import { Movie, validateMovie } from '../models/movie.js'
 import { Genre } from '../models/genre.js'
+import authorization from '../middleware/authorization.js';
 
 const router = express.Router();
 
@@ -21,7 +22,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // ADD a movie (Body)
-router.post('/', async (req, res) => {
+router.post('/', authorization, async (req, res) => {
     /* ** validate the request ** */
     const result = validateMovie(req.body);
     if(result.error){
@@ -52,7 +53,7 @@ router.post('/', async (req, res) => {
 });
 
 // UPDATE a movie (Body)
-router.put('/:id', async (req, res) => {
+router.put('/:id', authorization, async (req, res) => {
     /* ** validate the request ** */
     const result = validateMovie(req.body);
     if(result.error){
@@ -88,7 +89,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE a movie
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authorization, async (req, res) => {
     // delete
     const movie = await Movie.findByIdAndRemove(req.params.id);
     // check movie exist or not

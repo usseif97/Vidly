@@ -4,6 +4,7 @@ import mongoose from 'mongoose'; // mongoose is a function
 import { Rental, validateRental } from '../models/rental.js'
 import { Customer } from '../models/customer.js'
 import { Movie } from '../models/movie.js'
+import authorization from '../middleware/authorization.js';
 
 const router = express.Router();
 
@@ -26,7 +27,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // ADD a rental (Body)
-router.post('/', async (req, res) => {
+router.post('/', authorization, async (req, res) => {
     /* ** validate the request ** */
     const result = validateRental(req.body);
     if(result.error){
@@ -79,7 +80,7 @@ router.post('/', async (req, res) => {
 });
 
 // UPDATE a rental (Body)
-router.put('/:id', async (req, res) => {
+router.put('/:id', authorization, async (req, res) => {
     /* ** validate the request ** */
     const result = validateRental(req.body);
     if(result.error){
@@ -121,7 +122,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE a rental
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authorization, async (req, res) => {
     // delete
     const rental = await Rental.findByIdAndRemove(req.params.id);
     // check rental exist or not

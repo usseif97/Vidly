@@ -3,14 +3,22 @@ import helmet from 'helmet'; // helmet is a function
 import morgan from 'morgan'; // morgan is a function
 import config from 'config'; // config is a function
 import mongoose from 'mongoose'; // mongoose is a function
+import home from './routes/home.js'
 import genres from './routes/genres.js'
 import customers from './routes/customers.js'
 import movies from './routes/movies.js'
 import rentals from './routes/rentals.js'
-import home from './routes/home.js'
+import users from './routes/users.js'
+import auth from './routes/auth.js'
 
 // express Intialization
 const app = express();
+
+// config Intialization
+if(!config.get('jwtPrivateKey')){
+    console.error('FATAL ERROR: jwtPrivateKey is not defined !!');
+    process.exit(1);
+}
 
 // mongoDB connection
 mongoose.connect('mongodb://localhost/vidly')
@@ -43,11 +51,13 @@ if(app.get('env') === 'development') {
 
 /* *** End of cycle Middlewares *** */
 // Routes
+app.use('/', home);
 app.use('/api/genres', genres);
 app.use('/api/customers', customers);
 app.use('/api/movies', movies);
-app.use('/api/rentals', rentals);
-app.use('/', home);
+app.use('/api/rentals', rentals); 
+app.use('/api/users', users);
+app.use('/api/auth', auth);
 
 // set PORT and Server Listening
 const port = process.env.port || 3000;

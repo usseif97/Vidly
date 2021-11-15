@@ -1,5 +1,7 @@
 import express from 'express'; // express is a function
 import { Genre, validateGenre } from '../models/genre.js'
+import authorization from '../middleware/authorization.js';
+import admin from '../middleware/admin.js';
 
 const router = express.Router();
 
@@ -20,7 +22,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // ADD a genre (Body)
-router.post('/', async (req, res) => {
+router.post('/', authorization, async (req, res) => {
     /* ** validate the request ** */
     const result = validateGenre(req.body);
     if(result.error){
@@ -39,7 +41,7 @@ router.post('/', async (req, res) => {
 });
 
 // UPDATE a genre (Body)
-router.put('/:id', async (req, res) => {
+router.put('/:id', authorization, async (req, res) => {
     /* ** validate the request ** */
     const result = validateGenre(req.body);
     if(result.error){
@@ -58,7 +60,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE a genre
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', [authorization, admin], async (req, res) => {
     // delete
     const genre = await Genre.findByIdAndRemove(req.params.id);
     // check genre exist or not

@@ -1,5 +1,6 @@
 import express from 'express'; // express is a function
 import { Customer, validateCustomer } from '../models/customer.js'
+import authorization from '../middleware/authorization.js';
 
 const router = express.Router();
 
@@ -20,7 +21,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // ADD a customer (Body)
-router.post('/', async (req, res) => {
+router.post('/', authorization, async (req, res) => {
     /* ** validate the request ** */
     const result = validateCustomer(req.body);
     if(result.error){
@@ -40,7 +41,7 @@ router.post('/', async (req, res) => {
 });
 
 // UPDATE a customer (Body)
-router.put('/:id', async (req, res) => {
+router.put('/:id', authorization, async (req, res) => {
     /* ** validate the request ** */
     const result = validateCustomer(req.body);
     if(result.error){
@@ -66,7 +67,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE a customer
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authorization, async (req, res) => {
     // delete
     const customer = await Customer.findByIdAndRemove(req.params.id);
     // check customer exist or not
