@@ -2,27 +2,28 @@ import express from 'express'; // express is a function
 import { Genre, validateGenre } from '../models/genre.js'
 import authorization from '../middleware/authorization.js';
 import admin from '../middleware/admin.js';
+import asyncMiddleware from '../middleware/async.js';
 
 const router = express.Router();
 
 // GET all genres
-router.get('/', async (req, res) => {
+router.get('/', asyncMiddleware(async (req, res) => {
     const genres = await Genre.find().sort('name');
     res.send(genres);
-});
+}));
 
 // GET a genre
-router.get('/:id', async (req, res) => {
+router.get('/:id', asyncMiddleware(async (req, res) => {
     const genre = await Genre.findById(req.params.id);
     // check genre exist or not
     if(!genre)
         return res.status(404).send('Genre not found !!');
     
     res.send(genre);
-});
+}));
 
 // ADD a genre (Body)
-router.post('/', authorization, async (req, res) => {
+router.post('/', authorization, asyncMiddleware(async (req, res) => {
     /* ** validate the request ** */
     const result = validateGenre(req.body);
     if(result.error){
@@ -38,10 +39,10 @@ router.post('/', authorization, async (req, res) => {
     /* ** Add to the Database ** */
     await genre.save();
     res.send(genre);
-});
+}));
 
 // UPDATE a genre (Body)
-router.put('/:id', authorization, async (req, res) => {
+router.put('/:id', authorization, asyncMiddleware(async (req, res) => {
     /* ** validate the request ** */
     const result = validateGenre(req.body);
     if(result.error){
@@ -57,10 +58,10 @@ router.put('/:id', authorization, async (req, res) => {
         return res.status(404).send('Genre not found !!');
     }    
     res.send(genre);
-});
+}));
 
 // DELETE a genre
-router.delete('/:id', [authorization, admin], async (req, res) => {
+router.delete('/:id', [authorization, admin], asyncMiddleware(async (req, res) => {
     // delete
     const genre = await Genre.findByIdAndRemove(req.params.id);
     // check genre exist or not
@@ -68,6 +69,6 @@ router.delete('/:id', [authorization, admin], async (req, res) => {
         return res.status(404).send('Genre not found !!');
     }
     res.send(genre);
-});
+}));
 
 export default router;

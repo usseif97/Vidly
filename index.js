@@ -3,6 +3,8 @@ import helmet from 'helmet'; // helmet is a function
 import morgan from 'morgan'; // morgan is a function
 import config from 'config'; // config is a function
 import mongoose from 'mongoose'; // mongoose is a function
+import winston from 'winston'; // winston is a function
+import 'winston-mongodb';
 import home from './routes/home.js'
 import genres from './routes/genres.js'
 import customers from './routes/customers.js'
@@ -10,9 +12,33 @@ import movies from './routes/movies.js'
 import rentals from './routes/rentals.js'
 import users from './routes/users.js'
 import auth from './routes/auth.js'
+import error from './middleware/error.js'
 
 // express Intialization
 const app = express();
+
+// winston Intialization (logging)
+export const logger = winston.createLogger({
+    'transports': [
+        new winston.transports.Console(),
+        new winston.transports.File({
+            filename: 'logfile.log'
+        })
+    ]
+    /*winston.add(new winston.transports.MongoDB({ db: 'mongodb://localhost/vidly', level: 'error'}));*/
+});
+
+// log uncaught Exceptions (sync exceptions)
+process.on('uncaughtException', (exception) => {
+    logger.error(exception.message, exception);
+    process.exit(1);
+});
+
+// log promise Rejections (async exceptions)
+process.on('unhandledRejection', (exception) => {
+    logger.error(exception.message, exception);
+    process.exit(1);
+});
 
 // config Intialization
 if(!config.get('jwtPrivateKey')){
@@ -59,6 +85,9 @@ app.use('/api/rentals', rentals);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 
+// Error Handling
+app.use(error);
+
 // set PORT and Server Listening
 const port = process.env.port || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
@@ -74,4 +103,13 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
 // 3 bytes: counter
 
 // 2 ^ 24 = 16M (that can overflow)
+
+
+/* ****** request pipeline cycle ********* */
+// 1- Parse the JSON body (JSON or urlencoded)
+// 2- Authorization
+// 3- Admin
+// 4- Async Middleware  . Route Handler 
+//                      . Error Handler
+
 

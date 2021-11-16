@@ -6,29 +6,30 @@ import { Customer } from '../models/customer.js'
 import { Movie } from '../models/movie.js'
 import authorization from '../middleware/authorization.js';
 import admin from '../middleware/admin.js';
+import asyncMiddleware from '../middleware/async.js';
 
 const router = express.Router();
 
 //Fawn.init(mongoose);
 
 // GET all rentals
-router.get('/', async (req, res) => {
+router.get('/', asyncMiddleware(async (req, res) => {
     const rentals = await Rental.find().sort('-dateOut'); // DES
     res.send(rentals);
-});
+}));
 
 // GET a rental
-router.get('/:id', async (req, res) => {
+router.get('/:id', asyncMiddleware(async (req, res) => {
     const rental = await Rental.findById(req.params.id);
     // check rental exist or not
     if(!rental)
         return res.status(404).send('Rental not found !!');
     
     res.send(rental);
-});
+}));
 
 // ADD a rental (Body)
-router.post('/', authorization, async (req, res) => {
+router.post('/', authorization, asyncMiddleware(async (req, res) => {
     /* ** validate the request ** */
     const result = validateRental(req.body);
     if(result.error){
@@ -78,10 +79,10 @@ router.post('/', authorization, async (req, res) => {
     } catch (error){
         res.status(500).send('something failed !!');
     }
-});
+}));
 
 // UPDATE a rental (Body)
-router.put('/:id', authorization, async (req, res) => {
+router.put('/:id', authorization, asyncMiddleware(async (req, res) => {
     /* ** validate the request ** */
     const result = validateRental(req.body);
     if(result.error){
@@ -120,10 +121,10 @@ router.put('/:id', authorization, async (req, res) => {
         return res.status(404).send('rental not found !!');
     
     res.send(rental);
-});
+}));
 
 // DELETE a rental
-router.delete('/:id', [authorization, admin], async (req, res) => {
+router.delete('/:id', [authorization, admin], asyncMiddleware(async (req, res) => {
     // delete
     const rental = await Rental.findByIdAndRemove(req.params.id);
     // check rental exist or not
@@ -131,6 +132,6 @@ router.delete('/:id', [authorization, admin], async (req, res) => {
         return res.status(404).send('Customer not found !!');
     
     res.send(rental);
-});
+}));
 
 export default router;

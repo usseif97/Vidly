@@ -3,12 +3,13 @@ import bcrypt from 'bcrypt'; // bcrypt is a function
 import Joi from 'joi';  // Joi is a class
 import _ from 'lodash'; // _ is a class
 import { User } from '../models/user.js'
+import asyncMiddleware from '../middleware/async.js';
 
 const router = express.Router();
 
 
 // AUTHENTICATE a user 'Login' (Body)
-router.post('/', async (req, res) => {
+router.post('/', asyncMiddleware(async (req, res) => {
     /* ** validate the request ** */
     const result = validateUser(req.body);
     if(result.error){
@@ -29,7 +30,7 @@ router.post('/', async (req, res) => {
     const token = user.generateAuthToken();
 
     res.send(token);
-});
+}));
 
 // validate the request
 function validateUser(user) {

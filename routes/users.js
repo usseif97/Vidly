@@ -4,24 +4,25 @@ import _ from 'lodash'; // _ is a class
 import { User, validateUser } from '../models/user.js'
 import authorization from '../middleware/authorization.js';
 import admin from '../middleware/admin.js';
+import asyncMiddleware from '../middleware/async.js';
 
 const router = express.Router();
 
 // GET all users
-router.get('/', async (req, res) => {
+router.get('/', asyncMiddleware(async (req, res) => {
     const users = await User.find().sort('name');
     res.send(users);
-});
+}));
 
 // GET a user
-router.get('/:id', async (req, res) => {
+router.get('/:id', asyncMiddleware(async (req, res) => {
     const user = await User.findById(req.params.id);
     // check user exist or not
     if(!user)
         return res.status(404).send('User not found !!');
     
     res.send(user);
-});
+}));
 
 // GET the cuurent user
 /*router.get('/me', authorization, async (req, res) => {
@@ -32,7 +33,7 @@ router.get('/:id', async (req, res) => {
 });*/
 
 // CREATE a new user 'Register' (Body)
-router.post('/', async (req, res) => {
+router.post('/', asyncMiddleware(async (req, res) => {
     /* ** validate the request ** */
     const result = validateUser(req.body);
     if(result.error){
@@ -64,10 +65,10 @@ router.post('/', async (req, res) => {
 
     /* ** Send JWT in the header ** */
     res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
-});
+}));
 
 // UPDATE a user (Body)
-router.put('/:id', authorization, async (req, res) => {
+router.put('/:id', authorization, asyncMiddleware(async (req, res) => {
     /* ** validate the request ** */
     const result = validateUser(req.body);
     if(result.error){
@@ -83,10 +84,10 @@ router.put('/:id', authorization, async (req, res) => {
         return res.status(404).send('User not found !!');
     }    
     res.send(user);
-});
+}));
 
 // DELETE a user
-router.delete('/:id', [authorization, admin], async (req, res) => {
+router.delete('/:id', [authorization, admin], asyncMiddleware(async (req, res) => {
     // delete
     const user = await User.findByIdAndRemove(req.params.id);
     // check user exist or not
@@ -94,6 +95,6 @@ router.delete('/:id', [authorization, admin], async (req, res) => {
         return res.status(404).send('User not found !!');
     }
     res.send(user);
-});
+}));
 
 export default router;

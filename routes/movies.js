@@ -3,27 +3,28 @@ import { Movie, validateMovie } from '../models/movie.js'
 import { Genre } from '../models/genre.js'
 import authorization from '../middleware/authorization.js';
 import admin from '../middleware/admin.js';
+import asyncMiddleware from '../middleware/async.js';
 
 const router = express.Router();
 
 // GET all movies
-router.get('/', async (req, res) => {
+router.get('/', asyncMiddleware(async (req, res) => {
     const movies = await Movie.find().sort('name');
     res.send(movies);
-});
+}));
 
 // GET a movie
-router.get('/:id', async (req, res) => {
+router.get('/:id', asyncMiddleware(async (req, res) => {
     const movie = await Movie.findById(req.params.id);
     // check movie exist or not
     if(!movie)
         return res.status(404).send('Movie not found !!');
     
     res.send(movie);
-});
+}));
 
 // ADD a movie (Body)
-router.post('/', authorization, async (req, res) => {
+router.post('/', authorization, asyncMiddleware(async (req, res) => {
     /* ** validate the request ** */
     const result = validateMovie(req.body);
     if(result.error){
@@ -51,10 +52,10 @@ router.post('/', authorization, async (req, res) => {
     /* ** Add to the Database ** */
     await movie.save();
     res.send(movie);
-});
+}));
 
 // UPDATE a movie (Body)
-router.put('/:id', authorization, async (req, res) => {
+router.put('/:id', authorization, asyncMiddleware(async (req, res) => {
     /* ** validate the request ** */
     const result = validateMovie(req.body);
     if(result.error){
@@ -87,10 +88,10 @@ router.put('/:id', authorization, async (req, res) => {
         return res.status(404).send('Movie not found !!');
     
     res.send(movie);
-});
+}));
 
 // DELETE a movie
-router.delete('/:id', [authorization, admin], async (req, res) => {
+router.delete('/:id', [authorization, admin], asyncMiddleware(async (req, res) => {
     // delete
     const movie = await Movie.findByIdAndRemove(req.params.id);
     // check movie exist or not
@@ -98,6 +99,6 @@ router.delete('/:id', [authorization, admin], async (req, res) => {
         return res.status(404).send('Movie not found !!');
     
     res.send(movie);
-});
+}));
 
 export default router;
