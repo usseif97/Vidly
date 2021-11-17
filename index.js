@@ -1,96 +1,25 @@
 import express from 'express'; // express is a function
-import helmet from 'helmet'; // helmet is a function
-import morgan from 'morgan'; // morgan is a function
 import config from 'config'; // config is a function
-import mongoose from 'mongoose'; // mongoose is a function
-import winston from 'winston'; // winston is a function
-import 'winston-mongodb';
-import home from './routes/home.js'
-import genres from './routes/genres.js'
-import customers from './routes/customers.js'
-import movies from './routes/movies.js'
-import rentals from './routes/rentals.js'
-import users from './routes/users.js'
-import auth from './routes/auth.js'
-import error from './middleware/error.js'
+import { logging } from './startup/logging.js';
+import { logger } from './startup/logging.js';
+import db from './startup/db.js';
+import routes from './startup/routes.js';
+import configuration from './startup/configuration.js';
 
-// express Intialization
+// StartUp
 const app = express();
+logging();
+configuration();
+db();
+routes(app);
 
-// winston Intialization (logging)
-export const logger = winston.createLogger({
-    'transports': [
-        new winston.transports.Console(),
-        new winston.transports.File({
-            filename: 'logfile.log'
-        })
-    ]
-    /*winston.add(new winston.transports.MongoDB({ db: 'mongodb://localhost/vidly', level: 'error'}));*/
-});
-
-// log uncaught Exceptions (sync exceptions)
-process.on('uncaughtException', (exception) => {
-    logger.error(exception.message, exception);
-    process.exit(1);
-});
-
-// log promise Rejections (async exceptions)
-process.on('unhandledRejection', (exception) => {
-    logger.error(exception.message, exception);
-    process.exit(1);
-});
-
-// config Intialization
-if(!config.get('jwtPrivateKey')){
-    console.error('FATAL ERROR: jwtPrivateKey is not defined !!');
-    process.exit(1);
-}
-
-// mongoDB connection
-mongoose.connect('mongodb://localhost/vidly')
-    .then(() =>  console.log('Connected to MongoDB...'))
-    .catch((error) => console.error('Could not connect to MongoDB...', error));
-
-/* ** Configuration ** */
 // according to the environmnet (development - production)
 console.log(`Application Name: ${config.get('name')}`);
 console.log(`Mail Server: ${config.get('mail.host')}`);
 
-/* ** View Engine that return template HTML to the client ** */ 
-app.set('view engine', 'pug');
-app.set('views', './views')
-
-/* *** Middlewares *** */
-// Parse the JSON body, then set req.body (Middleware)
-app.use(express.json());
-
-// Parse the key-value body, then set req.body (Middleware)
-app.use(express.urlencoded({extended: true}));
-
-// Secure Express apps by setting various HTTP headers
-app.use(helmet());
-
-// Log HTTP requests
-if(app.get('env') === 'development') {
-    app.use(morgan('tiny'));
-}
-
-/* *** End of cycle Middlewares *** */
-// Routes
-app.use('/', home);
-app.use('/api/genres', genres);
-app.use('/api/customers', customers);
-app.use('/api/movies', movies);
-app.use('/api/rentals', rentals); 
-app.use('/api/users', users);
-app.use('/api/auth', auth);
-
-// Error Handling
-app.use(error);
-
 // set PORT and Server Listening
 const port = process.env.port || 3000;
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+app.listen(port, () => logger.info(`Listening on port ${port}...`));
 
 
 /* ****** Object ID ********* */

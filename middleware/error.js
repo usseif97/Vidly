@@ -1,4 +1,4 @@
-import { logger } from '../index.js';
+import { logger } from '../startup/logging.js';
 
 // works only in the request process pipeline (not work during the startup)
 function error (error, req, res, next){
