@@ -4,7 +4,7 @@ import config from 'config'; // config is a function
 function authorization(req, res, next){
     const token = req.header('x-auth-token');
 
-    // unauthorized user
+    // unauthorized user (401)
     if(!token) return res.status(401).send('Access denied. No token provided !!');
 
     try {
@@ -12,7 +12,7 @@ function authorization(req, res, next){
         req.user = decodedPayload;
         //req.params.user = decodedPayload;
     } catch (error){
-        // bad request
+        // bad request (400)
         return res.status(400).send('Invalid Token !!');
     }
     // pass control to the next request processing pipeline (Route Handler)

@@ -3,6 +3,7 @@ import { Customer, validateCustomer } from '../models/customer.js'
 import authorization from '../middleware/authorization.js';
 import admin from '../middleware/admin.js';
 import asyncMiddleware from '../middleware/async.js';
+import validateObjectId from '../middleware/validateObjectId.js';
 
 const router = express.Router();
 
@@ -13,7 +14,7 @@ router.get('/', asyncMiddleware(async (req, res) => {
 }));
 
 // GET a customer
-router.get('/:id', asyncMiddleware(async (req, res) => {
+router.get('/:id', validateObjectId, asyncMiddleware(async (req, res) => {
     const customer = await Customer.findById(req.params.id);
     // check customer exist or not
     if(!customer)

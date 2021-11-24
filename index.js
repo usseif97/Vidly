@@ -13,13 +13,11 @@ configuration();
 db();
 routes(app);
 
-// according to the environmnet (development - production)
-console.log(`Application Name: ${config.get('name')}`);
-console.log(`Mail Server: ${config.get('mail.host')}`);
-
 // set PORT and Server Listening
 const port = process.env.port || 3000;
-app.listen(port, () => logger.info(`Listening on port ${port}...`));
+const server = app.listen(port, () => logger.info(`Listening on port ${port}...`));
+
+export default server;
 
 
 /* ****** Object ID ********* */

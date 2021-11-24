@@ -5,6 +5,7 @@ import { User, validateUser } from '../models/user.js'
 import authorization from '../middleware/authorization.js';
 import admin from '../middleware/admin.js';
 import asyncMiddleware from '../middleware/async.js';
+import validateObjectId from '../middleware/validateObjectId.js';
 
 const router = express.Router();
 
@@ -15,7 +16,7 @@ router.get('/', asyncMiddleware(async (req, res) => {
 }));
 
 // GET a user
-router.get('/:id', asyncMiddleware(async (req, res) => {
+router.get('/:id', validateObjectId, asyncMiddleware(async (req, res) => {   
     const user = await User.findById(req.params.id);
     // check user exist or not
     if(!user)

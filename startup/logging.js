@@ -1,5 +1,5 @@
 import winston from 'winston'; // winston is a function
-import 'winston-mongodb'; // winston-mongodb is a function
+//import 'winston-mongodb'; // winston-mongodb is a function
 
 // winston (Logger) Intialization
 export const logger = winston.createLogger({

@@ -9,7 +9,7 @@ export const Movie = mongoose.model('Movie', new mongoose.Schema({ // embedding
         type: String,
         required: true,
         minlength: 5,
-        maxlength: 255,
+        maxlength: 100,
         trim: true,
     }, 
     genre: { // compulsory
@@ -33,7 +33,7 @@ export const Movie = mongoose.model('Movie', new mongoose.Schema({ // embedding
 // validate the request
 export function validateMovie(movie) {
     const schema = Joi.object({
-        title: Joi.string().min(5).max(50).required(),
+        title: Joi.string().min(5).max(100).required(),
         genreId: Joi.objectId().required(),
         numberInStock: Joi.number().min(0).max(255).required(),
         dailyRentalRate: Joi.number().min(0).max(255).required(),

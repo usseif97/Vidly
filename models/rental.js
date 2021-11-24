@@ -32,7 +32,7 @@ export const Rental = mongoose.model('Rental', new mongoose.Schema({ // hybrid (
         required: true,
         trim: true, 
         minlength: 5,
-        maxlength: 255
+        maxlength: 100
       },
       dailyRentalRate: { // compulsory
         type: Number, 

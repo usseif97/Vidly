@@ -5,6 +5,10 @@ function configuration() {
     if(!config.get('jwtPrivateKey')){
         throw new Error('FATAL ERROR: jwtPrivateKey is not defined !!');
     }
+
+    // according to the environmnet (development - production)
+    console.log(`Application Name: ${config.get('name')}`);
+    console.log(`Mail Server: ${config.get('mail.host')}`);
 }
 
 export default configuration;
