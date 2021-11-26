@@ -1,9 +1,10 @@
 import mongoose from 'mongoose'; // mongoose is a function
+import moment from 'moment'; // moment is a function
 import Joi from 'joi';  // Joi is a class
 import JoiObjectId from 'joi-objectid';
 Joi.objectId = JoiObjectId(Joi);
 
-export const Rental = mongoose.model('Rental', new mongoose.Schema({ // hybrid (refrence & embedding)
+const rentalSchema = new mongoose.Schema({
   customer: { // compulsory
     type: new mongoose.Schema({
       name: { // compulsory
@@ -43,7 +44,7 @@ export const Rental = mongoose.model('Rental', new mongoose.Schema({ // hybrid (
     }),
     required: true
   },
-  dateOut: { // set by the server
+  dateOut: {
     type: Date, 
     required: true,
     default: Date.now
@@ -51,11 +52,27 @@ export const Rental = mongoose.model('Rental', new mongoose.Schema({ // hybrid (
   dateReturned: { // set by the server
     type: Date
   },
-  rentalFee: { // set by the server
+  rentalFee: { // set by the server (no.OfDays * movie.dailyRentalRate)
     type: Number, 
     min: 0
   },
-}));
+});
+
+rentalSchema.statics.lookup = function(customerId, movieId) {  // static method
+  return this.findOne({
+    'customer._id': customerId,
+    'movie._id': movieId,
+  });
+}
+
+rentalSchema.methods.return = function() { // instance method
+  this.dateReturned = new Date();
+
+  const rentalDays = moment().diff(this.dateOut, 'days');
+  this.rentalFee = rentalDays * this.movie.dailyRentalRate;
+}
+
+export const Rental = mongoose.model('Rental', rentalSchema);
 
 // validate the request
 export function validateRental(rental) {

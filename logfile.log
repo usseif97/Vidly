@@ -33,3 +33,20 @@
 {"level":"info","message":"Connected to mongodb://localhost/vidly"}
 {"level":"info","message":"Listening on port 3000..."}
 {"level":"info","message":"Connected to mongodb://localhost/vidly"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/vidly"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/vidly"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/vidly"}
+{"level":"error","message":"Joi.Boolean is not a function Joi.Boolean is not a function","stack":"TypeError: Joi.Boolean is not a function\n    at validateUser (file:///C:/Users/Usseif/node%20projects/vidly/models/user.js:42:22)\n    at file:///C:/Users/Usseif/node%20projects/vidly/routes/users.js:39:20\n    at file:///C:/Users/Usseif/node%20projects/vidly/middleware/async.js:6:19\n    at Layer.handle [as handle_request] (C:\\Users\\Usseif\\node projects\\vidly\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\Usseif\\node projects\\vidly\\node_modules\\express\\lib\\router\\route.js:137:13)\n    at Route.dispatch (C:\\Users\\Usseif\\node projects\\vidly\\node_modules\\express\\lib\\router\\route.js:112:3)\n    at Layer.handle [as handle_request] (C:\\Users\\Usseif\\node projects\\vidly\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at C:\\Users\\Usseif\\node projects\\vidly\\node_modules\\express\\lib\\router\\index.js:281:22\n    at Function.process_params (C:\\Users\\Usseif\\node projects\\vidly\\node_modules\\express\\lib\\router\\index.js:335:12)\n    at next (C:\\Users\\Usseif\\node projects\\vidly\\node_modules\\express\\lib\\router\\index.js:275:10)"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/vidly"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/vidly"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/vidly"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/vidly"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/vidly"}

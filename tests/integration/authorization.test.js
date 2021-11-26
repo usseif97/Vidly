@@ -8,7 +8,7 @@ let server;
 describe('authorization middleware', () => {
     beforeEach(() => { server = require('../../index'); });
     afterEach(async () => { 
-        server.close();
+        await server.close();
         await Genre.remove({});
     });
 

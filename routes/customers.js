@@ -1,6 +1,7 @@
 import express from 'express'; // express is a function
 import { Customer, validateCustomer } from '../models/customer.js'
 import authorization from '../middleware/authorization.js';
+import validate from '../middleware/validate.js';
 import admin from '../middleware/admin.js';
 import asyncMiddleware from '../middleware/async.js';
 import validateObjectId from '../middleware/validateObjectId.js';
@@ -24,13 +25,7 @@ router.get('/:id', validateObjectId, asyncMiddleware(async (req, res) => {
 }));
 
 // ADD a customer (Body)
-router.post('/', authorization, asyncMiddleware(async (req, res) => {
-    /* ** validate the request ** */
-    const result = validateCustomer(req.body);
-    if(result.error){
-        // Bad request
-        return res.status(400).send(result.error.details[0].message);
-    }
+router.post('/', [authorization, validate(validateCustomer)], asyncMiddleware(async (req, res) => {
     /* ** Define a new record ** */
     const customer = new Customer({
         name: req.body.name,
@@ -44,14 +39,7 @@ router.post('/', authorization, asyncMiddleware(async (req, res) => {
 }));
 
 // UPDATE a customer (Body)
-router.put('/:id', authorization, asyncMiddleware(async (req, res) => {
-    /* ** validate the request ** */
-    const result = validateCustomer(req.body);
-    if(result.error){
-        // Bad request
-        return res.status(400).send(result.error.details[0].message);
-    }
-
+router.put('/:id', [authorization, validateObjectId, validate(validateCustomer)], asyncMiddleware(async (req, res) => {
     /* ** update the record ** */
     // update
     const customer = await Customer.findByIdAndUpdate(
@@ -70,7 +58,7 @@ router.put('/:id', authorization, asyncMiddleware(async (req, res) => {
 }));
 
 // DELETE a customer
-router.delete('/:id', [authorization, admin], asyncMiddleware(async (req, res) => {
+router.delete('/:id', [authorization, validateObjectId, admin], asyncMiddleware(async (req, res) => {
     // delete
     const customer = await Customer.findByIdAndRemove(req.params.id);
     // check customer exist or not

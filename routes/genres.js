@@ -1,6 +1,7 @@
 import express from 'express'; // express is a function
 import { Genre, validateGenre } from '../models/genre.js'
 import authorization from '../middleware/authorization.js';
+import validate from '../middleware/validate.js';
 import admin from '../middleware/admin.js';
 import asyncMiddleware from '../middleware/async.js';
 import validateObjectId from '../middleware/validateObjectId.js';
@@ -24,14 +25,7 @@ router.get('/:id', validateObjectId, asyncMiddleware(async (req, res) => {
 }));
 
 // ADD a genre (Body)
-router.post('/', authorization, asyncMiddleware(async (req, res) => {
-    /* ** validate the request ** */
-    const result = validateGenre(req.body);
-    if(result.error){
-        // Bad request
-        return res.status(400).send(result.error.details[0].message);
-    }
-
+router.post('/', [authorization, validate(validateGenre)], asyncMiddleware(async (req, res) => {
     /* ** Define a new record ** */
     const genre = new Genre({
         name: req.body.name,
@@ -43,14 +37,7 @@ router.post('/', authorization, asyncMiddleware(async (req, res) => {
 }));
 
 // UPDATE a genre (Body)
-router.put('/:id', authorization, asyncMiddleware(async (req, res) => {
-    /* ** validate the request ** */
-    const result = validateGenre(req.body);
-    if(result.error){
-        // Bad request
-        return res.status(400).send(result.error.details[0].message);
-    }
-
+router.put('/:id', [authorization, validateObjectId, validate(validateGenre)], asyncMiddleware(async (req, res) => {
     /* ** update the record ** */
     // update
     const genre = await Genre.findByIdAndUpdate(req.params.id, { name: req.body.name }, { new: true });
@@ -62,7 +49,7 @@ router.put('/:id', authorization, asyncMiddleware(async (req, res) => {
 }));
 
 // DELETE a genre
-router.delete('/:id', [authorization, admin], asyncMiddleware(async (req, res) => {
+router.delete('/:id', [authorization, validateObjectId, admin], asyncMiddleware(async (req, res) => {
     // delete
     const genre = await Genre.findByIdAndRemove(req.params.id);
     // check genre exist or not

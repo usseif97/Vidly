@@ -2,6 +2,7 @@ import express from 'express'; // express is a function
 import { Movie, validateMovie } from '../models/movie.js'
 import { Genre } from '../models/genre.js'
 import authorization from '../middleware/authorization.js';
+import validate from '../middleware/validate.js';
 import admin from '../middleware/admin.js';
 import asyncMiddleware from '../middleware/async.js';
 import validateObjectId from '../middleware/validateObjectId.js';
@@ -25,14 +26,7 @@ router.get('/:id', validateObjectId, asyncMiddleware(async (req, res) => {
 }));
 
 // ADD a movie (Body)
-router.post('/', authorization, asyncMiddleware(async (req, res) => {
-    /* ** validate the request ** */
-    const result = validateMovie(req.body);
-    if(result.error){
-        // Bad request
-        return res.status(400).send(result.error.details[0].message);
-    }
-
+router.post('/', [authorization, validate(validateMovie)], asyncMiddleware(async (req, res) => {
     /* ** Query the Database ** */
     // check & get the Genre
     const genre = await Genre.findById(req.body.genreId);
@@ -48,6 +42,12 @@ router.post('/', authorization, asyncMiddleware(async (req, res) => {
         },
         numberInStock: req.body.numberInStock,
         dailyRentalRate: req.body.dailyRentalRate,
+        description: req.body.description,
+        cast: req.body.cast,
+        image: req.body.image,
+        url: req.body.url,
+        date: req.body.date,
+        rate: req.body.rate,
     });
 
     /* ** Add to the Database ** */
@@ -56,14 +56,7 @@ router.post('/', authorization, asyncMiddleware(async (req, res) => {
 }));
 
 // UPDATE a movie (Body)
-router.put('/:id', authorization, asyncMiddleware(async (req, res) => {
-    /* ** validate the request ** */
-    const result = validateMovie(req.body);
-    if(result.error){
-        // Bad request
-        return res.status(400).send(result.error.details[0].message);
-    }
-
+router.put('/:id', [authorization, validateObjectId, validate(validateMovie)], asyncMiddleware(async (req, res) => {
     /* ** Query the Database ** */
     // check & get the Genre
     const genre = await Genre.findById(req.body.genreId);
@@ -80,7 +73,13 @@ router.put('/:id', authorization, asyncMiddleware(async (req, res) => {
               name: genre.name
             },
             numberInStock: req.body.numberInStock,
-            dailyRentalRate: req.body.dailyRentalRate
+            dailyRentalRate: req.body.dailyRentalRate,
+            description: req.body.description,
+            cast: req.body.cast,
+            image: req.body.image,
+            url: req.body.url,
+            date: req.body.date,
+            rate: req.body.rate,
         },
         { new: true });
 
@@ -92,7 +91,7 @@ router.put('/:id', authorization, asyncMiddleware(async (req, res) => {
 }));
 
 // DELETE a movie
-router.delete('/:id', [authorization, admin], asyncMiddleware(async (req, res) => {
+router.delete('/:id', [authorization, validateObjectId, admin], asyncMiddleware(async (req, res) => {
     // delete
     const movie = await Movie.findByIdAndRemove(req.params.id);
     // check movie exist or not

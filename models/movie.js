@@ -28,6 +28,24 @@ export const Movie = mongoose.model('Movie', new mongoose.Schema({ // embedding
         min: 0,
         max: 255
     },
+    description: {
+        type: String,
+    }, 
+    cast: {
+        type: String,
+    }, 
+    image: {
+        type: String,
+    }, 
+    url: {
+        type: String,
+    }, 
+    date: {
+        type: String,
+    },
+    rate: {
+        type: String,
+    }, 
 }));
 
 // validate the request
@@ -37,6 +55,12 @@ export function validateMovie(movie) {
         genreId: Joi.objectId().required(),
         numberInStock: Joi.number().min(0).max(255).required(),
         dailyRentalRate: Joi.number().min(0).max(255).required(),
+        description: Joi.string(),
+        cast: Joi.string(),
+        image: Joi.string(),
+        url: Joi.string(),
+        date: Joi.string(),
+        rate: Joi.string(),
     });
     return schema.validate(movie);
 };

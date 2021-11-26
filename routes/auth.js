@@ -4,19 +4,13 @@ import Joi from 'joi';  // Joi is a class
 import _ from 'lodash'; // _ is a class
 import { User } from '../models/user.js'
 import asyncMiddleware from '../middleware/async.js';
+import validate from '../middleware/validate.js';
 
 const router = express.Router();
 
 
 // AUTHENTICATE a user 'Login' (Body)
-router.post('/', asyncMiddleware(async (req, res) => {
-    /* ** validate the request ** */
-    const result = validateUser(req.body);
-    if(result.error){
-        // Bad request
-        return res.status(400).send(result.error.details[0].message);
-    }
-
+router.post('/', validate(validateUser), asyncMiddleware(async (req, res) => {
      /* ** Query the Database ** */
     // check the user arleady exist or not
     let user = await User.findOne({ email: req.body.email });

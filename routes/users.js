@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'; // bcrypt is a function
 import _ from 'lodash'; // _ is a class
 import { User, validateUser } from '../models/user.js'
 import authorization from '../middleware/authorization.js';
+import validate from '../middleware/validate.js';
 import admin from '../middleware/admin.js';
 import asyncMiddleware from '../middleware/async.js';
 import validateObjectId from '../middleware/validateObjectId.js';
@@ -34,14 +35,7 @@ router.get('/:id', validateObjectId, asyncMiddleware(async (req, res) => {
 });*/
 
 // CREATE a new user 'Register' (Body)
-router.post('/', asyncMiddleware(async (req, res) => {
-    /* ** validate the request ** */
-    const result = validateUser(req.body);
-    if(result.error){
-        // Bad request
-        return res.status(400).send(result.error.details[0].message);
-    }
-
+router.post('/', validate(validateUser), asyncMiddleware(async (req, res) => {
      /* ** Query the Database ** */
     // check the user arleady exist or not
     let user = await User.findOne({ email: req.body.email });
@@ -52,6 +46,7 @@ router.post('/', asyncMiddleware(async (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
+        isAdmin: req.body.isAdmin,
     });
 
     /* ** Hash the user password (salt) ** */
@@ -69,14 +64,7 @@ router.post('/', asyncMiddleware(async (req, res) => {
 }));
 
 // UPDATE a user (Body)
-router.put('/:id', authorization, asyncMiddleware(async (req, res) => {
-    /* ** validate the request ** */
-    const result = validateUser(req.body);
-    if(result.error){
-        // Bad request
-        return res.status(400).send(result.error.details[0].message);
-    }
-
+router.put('/:id', [authorization, validateObjectId, validate(validateUser)], asyncMiddleware(async (req, res) => {
     /* ** update the record ** */
     // update
     const user = await User.findByIdAndUpdate(req.params.id, { name: req.body.name }, { new: true });
@@ -88,7 +76,7 @@ router.put('/:id', authorization, asyncMiddleware(async (req, res) => {
 }));
 
 // DELETE a user
-router.delete('/:id', [authorization, admin], asyncMiddleware(async (req, res) => {
+router.delete('/:id', [authorization, validateObjectId, admin], asyncMiddleware(async (req, res) => {
     // delete
     const user = await User.findByIdAndRemove(req.params.id);
     // check user exist or not
