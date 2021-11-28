@@ -10,13 +10,13 @@ import validateObjectId from '../middleware/validateObjectId.js';
 const router = express.Router();
 
 // GET all movies
-router.get('/', asyncMiddleware(async (req, res) => {
+router.get('/', authorization, asyncMiddleware(async (req, res) => {
     const movies = await Movie.find().sort('name');
     res.send(movies);
 }));
 
 // GET a movie
-router.get('/:id', validateObjectId, asyncMiddleware(async (req, res) => {    
+router.get('/:id', [validateObjectId, authorization], asyncMiddleware(async (req, res) => {    
     const movie = await Movie.findById(req.params.id);
     // check movie exist or not
     if(!movie)
@@ -26,7 +26,7 @@ router.get('/:id', validateObjectId, asyncMiddleware(async (req, res) => {
 }));
 
 // ADD a movie (Body)
-router.post('/', [authorization, validate(validateMovie)], asyncMiddleware(async (req, res) => {
+router.post('/', [authorization, admin, validate(validateMovie)], asyncMiddleware(async (req, res) => {
     /* ** Query the Database ** */
     // check & get the Genre
     const genre = await Genre.findById(req.body.genreId);
@@ -56,13 +56,13 @@ router.post('/', [authorization, validate(validateMovie)], asyncMiddleware(async
 }));
 
 // UPDATE a movie (Body)
-router.put('/:id', [authorization, validateObjectId, validate(validateMovie)], asyncMiddleware(async (req, res) => {
-    /* ** Query the Database ** */
+/*router.put('/:id', [authorization, validateObjectId, validate(validateMovie)], asyncMiddleware(async (req, res) => {
+    // Query the Database
     // check & get the Genre
     const genre = await Genre.findById(req.body.genreId);
     if (!genre) return res.status(400).send('Invalid Genre !!');
 
-    /* ** update the record ** */
+    // update the record 
     // update
     const movie = await Movie.findByIdAndUpdate(
         req.params.id,
@@ -88,7 +88,7 @@ router.put('/:id', [authorization, validateObjectId, validate(validateMovie)], a
         return res.status(404).send('Movie not found !!');
     
     res.send(movie);
-}));
+}));*/
 
 // DELETE a movie
 router.delete('/:id', [authorization, validateObjectId, admin], asyncMiddleware(async (req, res) => {

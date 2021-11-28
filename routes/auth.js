@@ -12,9 +12,9 @@ const router = express.Router();
 // AUTHENTICATE a user 'Login' (Body)
 router.post('/', validate(validateUser), asyncMiddleware(async (req, res) => {
      /* ** Query the Database ** */
-    // check the user arleady exist or not
+    // check the user exist or not
     let user = await User.findOne({ email: req.body.email });
-    if (!user) return res.status(400).send('Invalid email or password !!');
+    if (!user) return res.status(400).send('user not found !!');
 
     /* ** Validate the Password ** */
     const isValid = await bcrypt.compare(req.body.password, user.password);

@@ -11,13 +11,13 @@ import validateObjectId from '../middleware/validateObjectId.js';
 const router = express.Router();
 
 // GET all users
-router.get('/', asyncMiddleware(async (req, res) => {
+router.get('/', authorization, asyncMiddleware(async (req, res) => {
     const users = await User.find().sort('name');
     res.send(users);
 }));
 
 // GET a user
-router.get('/:id', validateObjectId, asyncMiddleware(async (req, res) => {   
+router.get('/:id', [validateObjectId, authorization], asyncMiddleware(async (req, res) => {   
     const user = await User.findById(req.params.id);
     // check user exist or not
     if(!user)
@@ -65,8 +65,8 @@ router.post('/', validate(validateUser), asyncMiddleware(async (req, res) => {
 }));
 
 // UPDATE a user (Body)
-router.put('/:id', [authorization, validateObjectId, validate(validateUser)], asyncMiddleware(async (req, res) => {
-    /* ** update the record ** */
+/*router.put('/:id', [authorization, validateObjectId, validate(validateUser)], asyncMiddleware(async (req, res) => {
+    // update the record
     // update
     const user = await User.findByIdAndUpdate(req.params.id, { name: req.body.name }, { new: true });
     // check user exist or not
@@ -74,7 +74,7 @@ router.put('/:id', [authorization, validateObjectId, validate(validateUser)], as
         return res.status(404).send('User not found !!');
     }    
     res.send(user);
-}));
+}));*/
 
 // DELETE a user
 router.delete('/:id', [authorization, validateObjectId, admin], asyncMiddleware(async (req, res) => {

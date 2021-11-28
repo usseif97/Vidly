@@ -15,13 +15,13 @@ const router = express.Router();
 //Fawn.init(mongoose);
 
 // GET all rentals
-router.get('/', asyncMiddleware(async (req, res) => {
+router.get('/', [authorization, admin], asyncMiddleware(async (req, res) => {
     const rentals = await Rental.find().sort('-dateOut'); // DES
     res.send(rentals);
 }));
 
 // GET a rental
-router.get('/:id', validateObjectId, asyncMiddleware(async (req, res) => {
+router.get('/:id', [validateObjectId, authorization, admin], asyncMiddleware(async (req, res) => {
     const rental = await Rental.findById(req.params.id);
     // check rental exist or not
     if(!rental)

@@ -9,13 +9,13 @@ import validateObjectId from '../middleware/validateObjectId.js';
 const router = express.Router();
 
 // GET all customers
-router.get('/', asyncMiddleware(async (req, res) => {
+router.get('/', authorization, asyncMiddleware(async (req, res) => {
     const customers = await Customer.find().sort('name');
     res.send(customers);
 }));
 
 // GET a customer
-router.get('/:id', validateObjectId, asyncMiddleware(async (req, res) => {
+router.get('/:id', [validateObjectId, authorization], asyncMiddleware(async (req, res) => {
     const customer = await Customer.findById(req.params.id);
     // check customer exist or not
     if(!customer)
@@ -39,8 +39,8 @@ router.post('/', [authorization, validate(validateCustomer)], asyncMiddleware(as
 }));
 
 // UPDATE a customer (Body)
-router.put('/:id', [authorization, validateObjectId, validate(validateCustomer)], asyncMiddleware(async (req, res) => {
-    /* ** update the record ** */
+/*router.put('/:id', [authorization, validateObjectId, validate(validateCustomer)], asyncMiddleware(async (req, res) => {
+    // update the record 
     // update
     const customer = await Customer.findByIdAndUpdate(
         req.params.id,
@@ -55,7 +55,7 @@ router.put('/:id', [authorization, validateObjectId, validate(validateCustomer)]
         return res.status(404).send('Customer not found !!');
     
     res.send(customer);
-}));
+}));*/
 
 // DELETE a customer
 router.delete('/:id', [authorization, validateObjectId, admin], asyncMiddleware(async (req, res) => {
