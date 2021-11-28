@@ -1,7 +1,7 @@
 # Vidly
 
 
-# Packages
+* # Packages
 
 ## Joi
 validate body of the request according to appropriate schema 
@@ -16,7 +16,7 @@ hash the user password before saving on the database using salt and rounds
 generate JSON Web Token to authorize the APIs (sign, verify) which sign with userID & isAdmin
 
 
-# Models
+* # Models
 
 **USER**
 ----
@@ -57,7 +57,7 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
   * rentalFee: [Number - Null]
 
 
-# RESTful APIs
+* # RESTful APIs
 
 **Register a new user**
 ----
