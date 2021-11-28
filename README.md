@@ -1,6 +1,7 @@
 # Vidly
 
-## Packages
+
+# Packages
 
 ## Joi
 validate body of the request according to appropriate schema 
@@ -13,6 +14,47 @@ hash the user password before saving on the database using salt and rounds
 
 ## jwt
 generate JSON Web Token to authorize the APIs (sign, verify) which sign with userID & isAdmin
+
+
+# Models
+
+**USER**
+----
+  * name: [String]
+  * email: [String]
+  * password: [String]
+  * isAdmin: [Boolean - Null]
+  
+**CUSTOMER**
+----
+  * name: [String]
+  * phone: [String]
+  * isGold: [Boolean - Null]
+
+**GENRE**
+----
+  * name: [String]
+
+**MOVIE**
+----
+  * title: [String]
+  * genre: { GENRE }
+  * numberInStock: [Number]
+  * dailyRentalRate: [Number]
+  * description: [String - Null]
+  * cast: [String - Null]
+  * image: [String - Null]
+  * url: [String - Null]
+  * date: [String - Null]
+  * rate: [String - Null]
+
+**RENTAL**
+----
+  * customer: { CUSTOMER }
+  * movie: { MOVIE }
+  * dateOut: [Date - default]
+  * dateReturned: [Date - Null]
+  * rentalFee: [Number - Null]
 
 
 # RESTful APIs
