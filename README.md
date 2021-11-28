@@ -15,6 +15,8 @@ hash the user password before saving on the database using salt and rounds
 generate JSON Web Token to authorize the APIs (sign, verify) which sign with userID & isAdmin
 
 
+# RESTful APIs
+
 **Register a new user**
 ----
   create a new user
