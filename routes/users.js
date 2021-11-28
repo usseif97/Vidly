@@ -60,7 +60,8 @@ router.post('/', validate(validateUser), asyncMiddleware(async (req, res) => {
     const token = user.generateAuthToken();
 
     /* ** Send JWT in the header ** */
-    res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
+    res.send(token);
+    //res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
 }));
 
 // UPDATE a user (Body)

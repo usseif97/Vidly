@@ -50,3 +50,22 @@
 {"level":"info","message":"Connected to mongodb://localhost/vidly"}
 {"level":"info","message":"Listening on port 3000..."}
 {"level":"info","message":"Connected to mongodb://localhost/vidly"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/vidly"}
+{"level":"error","message":"rent.return is not a function rent.return is not a function","stack":"TypeError: rent.return is not a function\n    at file:///C:/Users/Usseif/node%20projects/vidly/routes/returns.js:35:16\n    at processTicksAndRejections (node:internal/process/task_queues:96:5)\n    at async file:///C:/Users/Usseif/node%20projects/vidly/middleware/async.js:6:13"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/vidly"}
+{"level":"error","message":"rent.return is not a function rent.return is not a function","stack":"TypeError: rent.return is not a function\n    at file:///C:/Users/Usseif/node%20projects/vidly/routes/returns.js:36:16\n    at processTicksAndRejections (node:internal/process/task_queues:96:5)\n    at async file:///C:/Users/Usseif/node%20projects/vidly/middleware/async.js:6:13"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/vidly"}
+{"level":"error","message":"rent.return is not a function rent.return is not a function","stack":"TypeError: rent.return is not a function\n    at file:///C:/Users/Usseif/node%20projects/vidly/routes/returns.js:36:16\n    at processTicksAndRejections (node:internal/process/task_queues:96:5)\n    at async file:///C:/Users/Usseif/node%20projects/vidly/middleware/async.js:6:13"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/vidly"}
+{"level":"error","message":"rental.exec is not a function rental.exec is not a function","stack":"TypeError: rental.exec is not a function\n    at file:///C:/Users/Usseif/node%20projects/vidly/routes/returns.js:21:12\n    at processTicksAndRejections (node:internal/process/task_queues:96:5)\n    at async file:///C:/Users/Usseif/node%20projects/vidly/middleware/async.js:6:13"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/vidly"}
+{"level":"error","message":"rental.exec is not a function rental.exec is not a function","stack":"TypeError: rental.exec is not a function\n    at file:///C:/Users/Usseif/node%20projects/vidly/routes/returns.js:20:12\n    at processTicksAndRejections (node:internal/process/task_queues:96:5)\n    at async file:///C:/Users/Usseif/node%20projects/vidly/middleware/async.js:6:13"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/vidly"}
+{"level":"info","message":"Listening on port 3000..."}
+{"level":"info","message":"Connected to mongodb://localhost/vidly"}
