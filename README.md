@@ -43,7 +43,7 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
+  * Content-Type= application/json
 
 * **Success Response:**
   
@@ -69,8 +69,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -104,8 +104,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -142,8 +142,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -192,7 +192,7 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
  
 * **Data Params**
 
-  Content-Type= application/json
+  * Content-Type= application/json
 
 * **Success Response:**
   
@@ -229,8 +229,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -262,8 +262,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -296,8 +296,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -333,8 +333,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -380,8 +380,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -413,8 +413,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -445,8 +445,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -480,8 +480,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -538,8 +538,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -582,8 +582,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -625,8 +625,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -671,8 +671,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -728,9 +728,9 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
-
+  * Content-Type= application/json
+  * x-auth-token= JWT
+  
 * **Success Response:**
   
   * **Code:** 200 <br />
@@ -782,8 +782,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -836,8 +836,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
@@ -888,8 +888,8 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 
 * **Data Params**
 
-  Content-Type= application/json
-  x-auth-token= JWT
+  * Content-Type= application/json
+  * x-auth-token= JWT
 
 * **Success Response:**
   
