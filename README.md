@@ -90,7 +90,10 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 * **Success Response:**
   
   * **Code:** 200 <br />
-    **Content:** `{ token : JWT }`
+    **Content:** `{ _id: ,
+                   name: ,
+                   email: ,
+                   token : JWT }`
  
 * **Error Response:**
 
@@ -239,7 +242,10 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 * **Success Response:**
   
   * **Code:** 200 <br />
-    **Content:** `{ token : JWT }`
+    **Content:** `{ _id: ,
+                   name: ,
+                   email: ,
+                   token : JWT }`
  
 * **Error Response:**
 
