@@ -23,7 +23,12 @@ router.post('/', validate(validateUser), asyncMiddleware(async (req, res) => {
     /* ** Generate Json Web Token ** */
     const token = user.generateAuthToken();
 
-    res.send(token);
+    //res.send(token);
+    res.send({  '_id': user._id,
+                'name': user.name,
+                'email': user.email,
+                'token': token,
+            });
 }));
 
 // validate the request
