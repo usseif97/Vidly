@@ -11,7 +11,7 @@ import validateObjectId from '../middleware/validateObjectId.js';
 const router = express.Router();
 
 // GET all users
-router.get('/', authorization, asyncMiddleware(async (req, res) => {
+router.get('/', [authorization, admin], asyncMiddleware(async (req, res) => {
     const users = await User.find().sort('name');
     res.send(users);
 }));
