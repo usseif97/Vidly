@@ -135,6 +135,9 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
   * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ error : "Access denied. No token provided !!" }`
 
+  * **Code:** 403 FORBIDDEN <br />
+    **Content:** `{ error : "Access denied." }`
+
 
 **Get a user**
 ----
