@@ -926,7 +926,7 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
   * **Code:** 403 FORBIDDEN <br />
     **Content:** `{ error : "Access denied." }`
 
-**Get a rental**
+**Get a user rentals**
 ----
 
 * **URL**
@@ -945,7 +945,7 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
 * **Success Response:**
   
   * **Code:** 200 <br />
-    **Content:** `{ _id : ,
+    **Content:** `[ { _id : ,
                     customer: { _id: ,
                                 name: ,
                                 phone: ,
@@ -964,7 +964,7 @@ generate JSON Web Token to authorize the APIs (sign, verify) which sign with use
                             url: ,
                             date: ,
                             rate: },
-                    dateOut: }`
+                    dateOut: } ]`
  
 * **Error Response:**
 
